@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BlueRise Weather</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: linear-gradient(to bottom, #f2e8c9, #e2d4a1);
+      overflow: hidden;
+    }
+
+    /* Floating autumn leaves */
+    .leaf {
+      position: absolute;
+      width: 25px;
+      height: 25px;
+      background: url('https://cdn-icons-png.flaticon.com/512/616/616408.png') no-repeat center/contain;
+      animation: float 15s linear infinite;
+      opacity: 0.6;
+    }
+
+    /* Flying birds */
+    .bird {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background: url('https://cdn-icons-png.flaticon.com/512/616/616408.png') no-repeat center/contain;
+      animation: fly 15s linear infinite;
+      opacity: 0.8;
+    }
+
+    /* Snowflakes */
+    .snowflake {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: url('https://cdn-icons-png.flaticon.com/512/616/616408.png') no-repeat center/contain;
+      animation: snow 10s linear infinite;
+      opacity: 0.6;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) translateX(0); }
+      100% { transform: translateY(100vh) translateX(-50vw); }
+    }
+
+    @keyframes fly {
+      0% { transform: translateX(-10vw); top: 10vh; }
+      100% { transform: translateX(110vw); top: 5vh; }
+    }
+
+    @keyframes snow {
+      0% { transform: translateY(0) scale(0.5); }
+      100% { transform: translateY(100vh) scale(1); }
+    }
+
+  </style>
+</head>
+<body class="flex items-center justify-center h-screen text-gray-800">
+
+  <!-- Floating autumn leaves -->
+  <div class="leaf" style="top:10%; left:20vw; animation-delay: 1s;"></div>
+  <div class="leaf" style="top:-50px; left:30vw; animation-delay: 3s;"></div>
+  <div class="leaf" style="top:5%; left:70vw; animation-delay: 4s;"></div>
+
+  <!-- Flying birds -->
+  <div class="bird" style="left:-50px; animation-delay: 1s;"></div>
+  <div class="bird" style="left:40%; animation-delay: 2s;"></div>
+
+  <!-- Snowflakes -->
+  <div class="snowflake" style="top:10%; left:30%; animation-delay: 0s;"></div>
+  <div class="snowflake" style="top:30%; left:50%; animation-delay: 2s;"></div>
+
+  <!-- Main card with weather info -->
+  <div class="bg-white bg-opacity-90 p-10 rounded-2xl shadow-xl max-w-md w-full text-center z-10">
+    <h1 class="text-3xl font-bold mb-4 text-blue-600">🌤️ BlueRise Weather - Forecast</h1>
+    <div class="space-y-4">
+      <h2 class="text-xl font-semibold">Weather in <span id="city-name">{{city}}</span>, <span id="country-name">{{country}}</span></h2>
+      <p class="text-lg">Temperature: <span id="temperature">{{temp}}°C</span></p>
+      <p class="text-lg">Condition: <span id="weather-condition">{{condition}}</span></p>
+      <p class="text-lg">Humidity: <span id="humidity">{{humidity}}%</span></p>
+      <p class="text-lg">Wind Speed: <span id="wind-speed">{{wind}} km/h</span></p>
+    </div>
+    <button class="mt-6 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md transition" onclick="window.location.href='/'">
+      Go Back
+    </button>
+  </div>
+
+</body>
+</html>

@@ -82,3 +82,94 @@ WEATHER_API_KEY=weatherapi_key
  3. Run the container with the image created.
 
 
+###################
+<!-- pipeline {
+    agent any
+
+    environment {
+        REGISTRY_CREDENTIALS_ID = 'dockerhub-login'  // Jenkins credentials ID
+        IMAGE_NAME = 'johnstx/bluerise'
+        SONARQUBE_ENV = 'SonarQubeServer' // Jenkins SonarQube server name
+    }
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm install'
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                sh 'npm test'
+            }
+        }
+
+        stage('Code Quality Analysis') {
+            steps {
+                withSonarQubeEnv("${SONARQUBE_ENV}") {
+                    sh 'sonar-scanner'
+                }
+            }
+        }
+
+        stage('Quality Gate') {
+            steps {
+                timeout(time: 2, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                script {
+                    def imageTag = "v${env.BUILD_NUMBER}"
+                    sh "docker build -t ${IMAGE_NAME}:${imageTag} ."
+                    sh "docker tag ${IMAGE_NAME}:${imageTag} ${IMAGE_NAME}:latest"
+                }
+            }
+        }
+
+        stage('Docker Push') {
+            steps {
+                script {
+                    def imageTag = "v${env.BUILD_NUMBER}"
+                    sh "echo ${DOCKER_PASS} | docker login -u ${DOCKER_USER} --password-stdin"
+                    sh "docker push ${IMAGE_NAME}:${imageTag}"
+                    sh "docker push ${IMAGE_NAME}:latest"
+                }
+            }
+        }
+
+        stage('Deploy to Staging') {
+            steps {
+                sh './deploy-staging.sh'
+            }
+        }
+
+        stage('Approval & Deploy to Production') {
+            steps {
+                input message: 'Approve Production Deployment?'
+                sh './deploy-prod.sh'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "✅ Pipeline completed successfully."
+        }
+        failure {
+            mail to: 'rxstaxx.io@gmail.com',
+                 subject: "❌ Jenkins Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                 body: "Build URL: ${env.BUILD_URL}"
+        }
+    }
+} -->

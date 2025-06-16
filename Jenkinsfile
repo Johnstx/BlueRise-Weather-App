@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         IMAGE_NAME = 'johnstx/bluerise'
-        IMAGE_TAG = 'v1.2'
+        IMAGE_TAG = 'v1.3'
         REGISTRY_CREDENTIALS_ID = 'dockerhub-login'  // Jenkins credentials ID
     }
 
